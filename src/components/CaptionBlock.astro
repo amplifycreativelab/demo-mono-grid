@@ -1,0 +1,26 @@
+---
+interface Props {
+    text: string;
+}
+const { text } = Astro.props;
+---
+
+<div class="caption-block">
+    <p>{text}</p>
+</div>
+
+<style>
+    .caption-block {
+        font-size: 0.75rem; /* Small size */
+        color: var(--color-muted-ink);
+        line-height: 1.5;
+        margin-top: var(--space-2);
+        max-width: 35ch;
+    }
+
+    .caption-block::before {
+        content: "—";
+        margin-right: var(--space-1);
+        opacity: 0.5;
+    }
+</style>

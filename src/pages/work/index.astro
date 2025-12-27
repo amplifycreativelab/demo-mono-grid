@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import GridFrame from "../../components/GridFrame.astro";
+import WorkCard from "../../components/WorkCard.astro";
+import { getCollection } from "astro:content";
+
+const allWork = await getCollection("work");
+const sortedWork = allWork.sort((a, b) => b.data.year - a.data.year);
+
+const pageTitle = "Work | MonoGrid";
+---
+
+<BaseLayout title={pageTitle}>
+    <Header />
+
+    <main>
+        <GridFrame class="page-header">
+            <h1>Selected Works</h1>
+        </GridFrame>
+
+        <GridFrame class="work-grid">
+            {
+                sortedWork.map((work) => (
+                    <div class="work-item">
+                        <WorkCard work={work} />
+                    </div>
+                ))
+            }
+        </GridFrame>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<style>
+    .page-header {
+        padding-top: var(--space-8);
+        padding-bottom: var(--space-8);
+    }
+
+    h1 {
+        grid-column: 1 / -1;
+        font-size: 3rem;
+    }
+
+    .work-grid {
+        padding-bottom: var(--space-12);
+        row-gap: var(--space-8);
+    }
+
+    .work-item {
+        grid-column: span 4;
+    }
+
+    @media (min-width: 768px) {
+        .work-item {
+            grid-column: span 3;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .work-item {
+            grid-column: span 4;
+        }
+    }
+</style>

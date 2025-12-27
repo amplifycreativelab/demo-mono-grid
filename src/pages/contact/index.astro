@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import GridFrame from "../../components/GridFrame.astro";
+
+const pageTitle = "Contact | MonoGrid";
+---
+
+<BaseLayout title={pageTitle}>
+    <Header />
+
+    <main>
+        <GridFrame class="section">
+            <div class="col-left">
+                <h1>Start a Project</h1>
+                <p>
+                    We are currently accepting new commissions for 2025. Please
+                    tell us about your project.
+                </p>
+
+                <div class="contact-details">
+                    <a
+                        href="https://amplifycreativelab.com"
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        >amplifycreativelab.com</a
+                    >
+                    <address>
+                        Fictional details for a non-indexed concept demo.
+                    </address>
+                </div>
+            </div>
+
+            <div class="col-right">
+                <form
+                    class="contact-form"
+                    action="#"
+                    onsubmit="event.preventDefault();"
+                >
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="project">Project Details</label>
+                        <textarea id="project" name="project" rows="5" required
+                        ></textarea>
+                    </div>
+                    <button type="submit">Send Enquiry</button>
+                </form>
+            </div>
+        </GridFrame>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<style>
+    .section {
+        margin-top: var(--space-8);
+        margin-bottom: var(--space-12);
+    }
+
+    .col-left {
+        grid-column: 1 / -1;
+        margin-bottom: var(--space-8);
+    }
+
+    .col-right {
+        grid-column: 1 / -1;
+    }
+
+    @media (min-width: 1024px) {
+        .col-left {
+            grid-column: 2 / 6;
+        }
+        .col-right {
+            grid-column: 7 / 12;
+        }
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-3);
+    }
+
+    .contact-details {
+        margin-top: var(--space-6);
+    }
+
+    .contact-details a {
+        display: block;
+        margin-bottom: var(--space-2);
+        font-size: 1.125rem;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+    address {
+        font-style: normal;
+        color: var(--color-muted-ink);
+    }
+
+    .form-group {
+        margin-bottom: var(--space-4);
+    }
+
+    label {
+        display: block;
+        font-size: 0.875rem;
+        margin-bottom: 8px;
+        color: var(--color-muted-ink);
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 0;
+        background: transparent;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: 2px solid var(--color-oxide);
+        border-color: transparent;
+    }
+
+    button {
+        background: var(--color-ink);
+        color: white;
+        padding: 12px 24px;
+        font-size: 1rem;
+        margin-top: var(--space-2);
+        transition: background 0.2s;
+    }
+
+    button:hover {
+        background: var(--color-oxide);
+    }
+</style>

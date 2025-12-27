@@ -1,0 +1,123 @@
+---
+const siteBase = import.meta.env.BASE_URL;
+
+function getLink(path: string) {
+    if (path === "/") return siteBase;
+    return `${siteBase}${path.startsWith("/") ? path.slice(1) : path}`;
+}
+---
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-col brand">
+            <a href={getLink("/")} class="footer-logo">MonoGrid</a>
+            <p class="footer-meta">
+                Swiss Minimal Architecture<br />Non-indexed concept demo
+            </p>
+        </div>
+
+        <div class="footer-col address">
+            <h4>Office</h4>
+            <address>
+                12 Example Avenue<br />
+                Central District<br />
+                Fictional details for a portfolio demo
+            </address>
+        </div>
+
+        <div class="footer-col contact">
+            <h4>Contact</h4>
+            <a
+                href="https://amplifycreativelab.com"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                >amplifycreativelab.com</a
+            >
+        </div>
+
+        <div class="footer-col social">
+            <h4>Connect</h4>
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </div>
+
+    <div class="footer-copyright">
+        <p>
+            &copy; {new Date().getFullYear()} MonoGrid. Demo by Amplify Creative Lab.
+        </p>
+    </div>
+</footer>
+
+<style>
+    .site-footer {
+        padding: var(--space-12) 0 var(--space-6);
+        background-color: var(--color-white-stone);
+        border-top: 1px solid var(--color-rule);
+        margin-top: auto; /* Push to bottom if flex col body */
+    }
+
+    .footer-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--space-4);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+
+    @media (min-width: 768px) {
+        .footer-inner {
+            padding: 0 var(--space-6);
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .footer-logo {
+        font-family: var(--font-heading);
+        font-weight: 600;
+        display: block;
+        margin-bottom: var(--space-2);
+    }
+
+    .footer-meta,
+    address,
+    .footer-col a {
+        font-size: 0.875rem;
+        color: var(--color-muted-ink);
+        font-style: normal;
+        line-height: 1.5;
+    }
+
+    .footer-col h4 {
+        font-family: var(--font-body); /* Subtle label */
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-ink);
+        margin-bottom: var(--space-2);
+    }
+
+    .footer-col a {
+        display: block;
+    }
+
+    .footer-col a:hover {
+        color: var(--color-oxide);
+    }
+
+    .footer-copyright {
+        max-width: var(--max-width);
+        margin: var(--space-8) auto 0;
+        padding: 0 var(--space-4);
+        font-size: 0.75rem;
+        color: var(--color-muted-ink);
+        opacity: 0.5;
+    }
+
+    @media (min-width: 768px) {
+        .footer-copyright {
+            padding: 0 var(--space-6);
+        }
+    }
+</style>

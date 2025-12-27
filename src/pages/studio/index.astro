@@ -1,0 +1,159 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import GridFrame from "../../components/GridFrame.astro";
+import { Image } from "astro:assets";
+import annaImg from "../../assets/studio/anna-weber.webp";
+import lukasImg from "../../assets/studio/lukas-keller.webp";
+import elenaImg from "../../assets/studio/elena-ross.webp";
+
+const pageTitle = "Studio | MonoGrid";
+---
+
+<BaseLayout title={pageTitle}>
+    <Header />
+
+    <main>
+        <GridFrame class="section">
+            <div class="col-text">
+                <h1>We believe in the quiet power of architecture.</h1>
+            </div>
+        </GridFrame>
+
+        <GridFrame class="section">
+            <div class="col-left">
+                <h3>Philosophy</h3>
+            </div>
+            <div class="col-right">
+                <p>
+                    MonoGrid was founded on the principle that the most
+                    impactful spaces are those that remove distraction. We do
+                    not add; we reveal. Our process is one of rigorous
+                    subtraction, stripping away the non-essential until the core
+                    truth of the project emerges.
+                </p>
+                <p>
+                    Every line must have a purpose. Every material must speak
+                    its name. We create environments that endure not just
+                    physically, but emotionally.
+                </p>
+            </div>
+        </GridFrame>
+
+        <GridFrame class="section">
+            <div class="col-left">
+                <h3>People</h3>
+            </div>
+            <div class="col-right">
+                <div class="team-list">
+                    <div class="team-member">
+                        <div class="image-wrapper">
+                            <Image src={annaImg} alt="Anna Weber" />
+                        </div>
+                        <h4>Anna Weber</h4>
+                        <span>Principal Architect</span>
+                    </div>
+                    <div class="team-member">
+                        <div class="image-wrapper">
+                            <Image src={lukasImg} alt="Lukas Keller" />
+                        </div>
+                        <h4>Lukas Keller</h4>
+                        <span>Design Director</span>
+                    </div>
+                    <div class="team-member">
+                        <div class="image-wrapper">
+                            <Image src={elenaImg} alt="Elena Ross" />
+                        </div>
+                        <h4>Elena Ross</h4>
+                        <span>Interior Lead</span>
+                    </div>
+                </div>
+            </div>
+        </GridFrame>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<style>
+    .section {
+        padding-bottom: var(--space-8);
+        margin-top: var(--space-8);
+    }
+
+    .col-text {
+        grid-column: 1 / -1;
+    }
+    @media (min-width: 1024px) {
+        .col-text {
+            grid-column: 1 / 10;
+        }
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .col-left {
+        grid-column: 1 / -1;
+        margin-bottom: var(--space-3);
+    }
+
+    .col-right {
+        grid-column: 1 / -1;
+    }
+
+    @media (min-width: 1024px) {
+        .col-left {
+            grid-column: 1 / 4;
+        }
+        .col-right {
+            grid-column: 5 / 11;
+        }
+    }
+
+    h3 {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted-ink);
+    }
+
+    p {
+        margin-bottom: var(--space-4);
+    }
+
+    .team-list {
+        display: grid;
+        gap: var(--space-4);
+    }
+
+    .team-member h4 {
+        margin: 0;
+        font-size: 1.125rem;
+    }
+
+    .team-member span {
+        font-size: 0.875rem;
+        color: var(--color-muted-ink);
+    }
+
+    .image-wrapper {
+        aspect-ratio: 3/4;
+        background: var(--color-rule);
+        margin-bottom: var(--space-2);
+        overflow: hidden;
+    }
+
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .team-member:hover .image-wrapper img {
+        transform: scale(1.05);
+    }
+</style>

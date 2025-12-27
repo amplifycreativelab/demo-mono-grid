@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    src: any; // Astro image metadata
+    alt: string;
+}
+const { src, alt } = Astro.props;
+---
+
+<div class="image-wipe" data-wipe>
+    <Image src={src} alt={alt} />
+    <div class="wipe-overlay"></div>
+</div>
+
+<style>
+    .image-wipe {
+        position: relative;
+        overflow: hidden;
+        display: block;
+    }
+
+    .image-wipe img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .wipe-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 101%; /* +1% to cover rounding errors */
+        background: var(--color-white-stone);
+        transform: translateY(0);
+        transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); /* Architectural ease */
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .image-wipe.in-view .wipe-overlay {
+        transform: translateY(-100%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .wipe-overlay {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    // Simple intersection observer
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("in-view");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.1 },
+    );
+
+    // Run on load and after view transitions
+    function init() {
+        document
+            .querySelectorAll("[data-wipe]")
+            .forEach((el) => observer.observe(el));
+    }
+
+    init();
+    document.addEventListener("astro:page-load", init);
+</script>

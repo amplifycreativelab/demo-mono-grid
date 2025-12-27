@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import GridFrame from "../../components/GridFrame.astro";
+import ImageWipe from "../../components/ImageWipe.astro";
+import CaptionBlock from "../../components/CaptionBlock.astro";
+import MinimalCTA from "../../components/MinimalCTA.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+    const workEntries = await getCollection("work");
+    return workEntries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const siteBase = import.meta.env.BASE_URL;
+function getLink(path: string) {
+    if (path === "/") return siteBase;
+    return `${siteBase}${path.startsWith("/") ? path.slice(1) : path}`;
+}
+---
+
+<BaseLayout title={`${entry.data.title} | MonoGrid`}>
+    <Header />
+
+    <main class="case-study">
+        <GridFrame class="hero">
+            <div class="hero-image-container">
+                <ImageWipe src={entry.data.cover} alt={entry.data.title} />
+            </div>
+            <div class="hero-meta">
+                <h1>{entry.data.title}</h1>
+                <div class="meta-row">
+                    <span>{entry.data.location}</span>
+                    <span>{entry.data.year}</span>
+                </div>
+                <p class="overview">{entry.data.overview}</p>
+            </div>
+        </GridFrame>
+
+        <GridFrame class="content">
+            <div class="outcome-block">
+                <h3>Outcome</h3>
+                <p>{entry.data.outcome}</p>
+            </div>
+        </GridFrame>
+
+        {
+            entry.data.gallery && (
+                <GridFrame class="gallery">
+                    {entry.data.gallery.map((item, index) => (
+                        <div class="gallery-item">
+                            <ImageWipe
+                                src={item.image}
+                                alt={item.caption || ""}
+                            />
+                            {item.caption && (
+                                <CaptionBlock text={item.caption} />
+                            )}
+                        </div>
+                    ))}
+                </GridFrame>
+            )
+        }
+
+        <GridFrame class="next">
+            <div class="next-inner">
+                <MinimalCTA href={getLink("/work")} text="Back to Works" />
+            </div>
+        </GridFrame>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<style>
+    .hero {
+        margin-bottom: var(--space-8);
+    }
+
+    .hero-image-container {
+        grid-column: 1 / -1;
+        margin-bottom: var(--space-4);
+    }
+
+    .hero-meta {
+        grid-column: 1 / -1;
+    }
+
+    @media (min-width: 1024px) {
+        .hero-image-container {
+            grid-column: 1 / 13; /* Full width */
+        }
+
+        .hero-meta {
+            grid-column: 1 / 6;
+            margin-top: var(--space-4);
+        }
+    }
+
+    .meta-row {
+        display: flex;
+        gap: var(--space-3);
+        color: var(--color-muted-ink);
+        margin-bottom: var(--space-3);
+        font-size: 0.875rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-2);
+    }
+
+    .overview {
+        font-size: 1.125rem;
+        line-height: 1.5;
+    }
+
+    .content {
+        margin-bottom: var(--space-8);
+    }
+
+    .outcome-block {
+        grid-column: 1 / -1;
+        background: #fafafa;
+        padding: var(--space-4);
+    }
+
+    @media (min-width: 1024px) {
+        .outcome-block {
+            grid-column: 7 / 13;
+        }
+    }
+
+    .gallery {
+        margin-bottom: var(--space-12);
+        row-gap: var(--space-8);
+    }
+
+    .gallery-item {
+        grid-column: 1 / -1;
+        margin-bottom: var(--space-6);
+    }
+
+    @media (min-width: 1024px) {
+        /* Alternate alignment if we had logic, but simpler: centered large */
+        .gallery-item {
+            grid-column: 2 / 12;
+        }
+    }
+
+    .next-inner {
+        grid-column: 1 / -1;
+        padding-top: var(--space-6);
+        border-top: 1px solid var(--color-rule);
+    }
+</style>

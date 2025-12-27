@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import GridFrame from "../components/GridFrame.astro";
+import WorkCard from "../components/WorkCard.astro";
+import MinimalCTA from "../components/MinimalCTA.astro";
+import { getCollection } from "astro:content";
+
+const allWork = await getCollection("work");
+const sortedWork = allWork.sort((a, b) => b.data.year - a.data.year);
+const featuredWork = sortedWork.slice(0, 6);
+
+const pageTitle = "MonoGrid | Swiss Minimal Architecture";
+const siteBase = import.meta.env.BASE_URL;
+
+function getLink(path: string) {
+	if (path === "/") return siteBase;
+	return `${siteBase}${path.startsWith("/") ? path.slice(1) : path}`;
+}
+---
+
+<BaseLayout title={pageTitle}>
+	<Header />
+
+	<main>
+		<GridFrame class="hero-section">
+			<div class="hero-content">
+				<h1>
+					We build silence.<br />Architecture reduced to its essential
+					truth.
+				</h1>
+				<p>
+					MonoGrid is a multidisciplinary studio focused on rigorous
+					design, reductive aesthetics, and the poetry of space.
+				</p>
+				<div class="cta-wrapper">
+					<MinimalCTA href={getLink("/work")} text="View Projects" />
+				</div>
+			</div>
+		</GridFrame>
+
+		<GridFrame class="work-grid">
+			{
+				featuredWork.map((work) => (
+					<div class="work-item">
+						<WorkCard work={work} />
+					</div>
+				))
+			}
+		</GridFrame>
+
+		<GridFrame class="philosophy-section">
+			<div class="philosophy-content">
+				<h2>
+					Design is a process of elimination. We remove the
+					unnecessary until only the meaningful remains.
+				</h2>
+				<div class="cta-wrapper centered">
+					<MinimalCTA
+						href={getLink("/studio")}
+						text="Our Philosophy"
+					/>
+				</div>
+			</div>
+		</GridFrame>
+	</main>
+
+	<Footer />
+</BaseLayout>
+
+<style>
+	.hero-section {
+		padding-top: var(--space-8);
+		padding-bottom: var(--space-12);
+		min-height: 60vh;
+		align-items: center;
+	}
+
+	.hero-content {
+		grid-column: 1 / -1;
+	}
+
+	@media (min-width: 768px) {
+		.hero-content {
+			grid-column: 1 / 10;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.hero-content {
+			grid-column: 1 / 8;
+		}
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 5vw, 4.5rem);
+		line-height: 1.1;
+		margin-bottom: var(--space-4);
+		font-weight: 500;
+	}
+
+	.cta-wrapper {
+		margin-top: var(--space-4);
+	}
+
+	.work-grid {
+		padding-bottom: var(--space-12);
+		row-gap: var(--space-8);
+	}
+
+	.work-item {
+		grid-column: span 4;
+	}
+
+	@media (min-width: 768px) {
+		.work-item {
+			grid-column: span 3;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.work-item {
+			grid-column: span 4;
+		}
+	}
+
+	.philosophy-section {
+		padding-top: var(--space-12);
+		padding-bottom: var(--space-16);
+	}
+
+	.philosophy-content {
+		grid-column: 1 / -1;
+	}
+
+	@media (min-width: 1024px) {
+		.philosophy-content {
+			grid-column: 3 / 11;
+			text-align: center;
+		}
+	}
+
+	.philosophy-content h2 {
+		font-size: clamp(1.5rem, 3vw, 2.5rem);
+		margin-bottom: var(--space-6);
+		font-weight: 400;
+		max-width: 40ch;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.cta-wrapper.centered {
+		display: flex;
+		justify-content: center;
+	}
+</style>

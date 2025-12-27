@@ -1,0 +1,37 @@
+---
+interface Props {
+    as?: string;
+    class?: string;
+}
+
+const { as: Element = "section", class: className = "" } = Astro.props;
+---
+
+<Element class:list={["grid-frame", className]}>
+    <slot />
+</Element>
+
+<style>
+    .grid-frame {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-3);
+        padding: 0 var(--space-4);
+        max-width: var(--max-width);
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .grid-frame {
+            grid-template-columns: repeat(6, 1fr);
+            padding: 0 var(--space-6);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .grid-frame {
+            grid-template-columns: repeat(12, 1fr);
+        }
+    }
+</style>

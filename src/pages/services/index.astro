@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import GridFrame from "../../components/GridFrame.astro";
+import { Image } from "astro:assets";
+import archImg from "../../assets/services/architecture.webp";
+import interImg from "../../assets/services/interior.webp";
+
+const pageTitle = "Services | MonoGrid";
+---
+
+<BaseLayout title={pageTitle}>
+    <Header />
+
+    <main>
+        <GridFrame class="header">
+            <h1>Services</h1>
+        </GridFrame>
+
+        <GridFrame class="section">
+            <div class="service-block">
+                <div class="service-info">
+                    <h2>01. Architecture</h2>
+                    <p>
+                        Full-service architectural design from concept to
+                        completion. We specialize in residential and cultural
+                        projects that require a high degree of sensitivity and
+                        precision.
+                    </p>
+                    <ul>
+                        <li>Feasibility Studies</li>
+                        <li>Concept Design</li>
+                        <li>Construction Documentation</li>
+                        <li>Site Supervision</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <Image src={archImg} alt="Architecture" />
+                </div>
+            </div>
+        </GridFrame>
+
+        <GridFrame class="section">
+            <div class="service-block">
+                <div class="service-info">
+                    <h2>02. Interior Design</h2>
+                    <p>
+                        Seamless integration of interior and exterior. We design
+                        bespoke joinery, select finishes, and curate furnishings
+                        that complement the architectural intent.
+                    </p>
+                    <ul>
+                        <li>Space Planning</li>
+                        <li>Material Selection</li>
+                        <li>Furniture Curation</li>
+                        <li>Custom Joinery Design</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <Image src={interImg} alt="Interior Design" />
+                </div>
+            </div>
+        </GridFrame>
+
+        <GridFrame class="section">
+            <div class="service-block">
+                <h2>03. Master Planning</h2>
+                <p>
+                    Strategic thinking for complex sites. We approach planning
+                    with a focus on context, sustainability, and long-term
+                    value.
+                </p>
+            </div>
+        </GridFrame>
+    </main>
+
+    <Footer />
+</BaseLayout>
+
+<style>
+    .header {
+        margin-top: var(--space-8);
+        margin-bottom: var(--space-8);
+    }
+    h1 {
+        grid-column: 1 / -1;
+        font-size: 3rem;
+    }
+
+    .section {
+        margin-bottom: var(--space-6);
+    }
+
+    .service-block {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--color-rule);
+        padding-top: var(--space-3);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+
+    .service-image img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    @media (min-width: 1024px) {
+        .service-block {
+            grid-column: 4 / 11;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-3);
+    }
+
+    ul li {
+        list-style: disc;
+        margin-left: 1.25rem;
+        color: var(--color-muted-ink);
+        margin-bottom: 4px;
+    }
+</style>
